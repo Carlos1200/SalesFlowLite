@@ -1,75 +1,76 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemeButton } from "@/components/ThemeButton";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedTextInput } from "@/components/ThemeTextInput";
+import { LeadCard } from "@/components/ui/Leads/LeadCard";
+import { stages } from "@/constants/LeadsList";
+import { useState } from "react";
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+    const [selectedFilter, setSelectedFilter] = useState("1");
+    return (
+        <ThemedView style={{ flex: 1 }}>
+            <ThemedText style={styles.title}>Leads</ThemedText>
+            <ThemedTextInput
+                searchContainerStyle={styles.inputContainer}
+                placeholder="Search Leads"
+                isSearchBox
+            />
+            <ThemedView style={styles.filterList}>
+                <FlatList
+                    data={stages}
+                    renderItem={({ item }) => (
+                        <ThemeButton
+                            title={item.name}
+                            style={styles.filterButton}
+                            textStyles={styles.filterButtonText}
+                            isSelected={selectedFilter === item.id}
+                            onPress={() => setSelectedFilter(item.id)}
+                        />
+                    )}
+                    keyExtractor={(item) => item.id}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.filterListItem}
+                />
+            </ThemedView>
+            <LeadCard
+                name="John Doe"
+                company="Acme Corp"
+                contact="john.doe@example.com"
+                createdAt="2023-03-15T12:00:00Z"
+            />
+        </ThemedView>
+    );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+    title: {
+        fontSize: 30,
+        fontWeight: "bold",
+        marginLeft: 20,
+    },
+    inputContainer: {
+        marginTop: 20,
+        marginHorizontal: 20,
+    },
+    filterList: {
+        height: 35,
+        marginHorizontal: 20,
+        marginTop: 25,
+    },
+    filterListItem: {
+        gap: 10,
+    },
+    filterButton: {
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        borderRadius: 20,
+    },
+    filterButtonText: {
+        fontSize: 12,
+        fontWeight: "600",
+    },
 });
