@@ -1,30 +1,30 @@
 export const stages = [
     {
         id: "1",
-        name: "All Stages"
+        nameKey: "all"
     },
     {
         id: "2",
-        name: "New"
+        nameKey: "new"
     },
     {
         id: "3",
-        name: "Contacted"
+        nameKey: "contacted"
     },
     {
         id: "4",
-        name: "Qualified"
+        nameKey: "qualified"
     },
     {
         id: "5",
-        name: "Proposal"
+        nameKey: "proposal"
     },
     {
         id: "6",
-        name: "Won"
+        nameKey: "won"
     },
     {
         id: "8",
-        name: "Lost"
+        nameKey: "lost"
     }
 ]

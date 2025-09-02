@@ -1,5 +1,3 @@
-import { FlatList, StyleSheet } from "react-native";
-
 import { ThemeButton } from "@/components/ThemeButton";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -8,15 +6,18 @@ import { ThemedTextInput } from "@/components/ThemeTextInput";
 import { LeadCard } from "@/components/ui/Leads/LeadCard";
 import { stages } from "@/constants/LeadsList";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { FlatList, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
     const [selectedFilter, setSelectedFilter] = useState("1");
+    const { t } = useTranslation();
     return (
         <ThemedView style={{ flex: 1 }}>
-            <ThemedText style={styles.title}>Leads</ThemedText>
+            <ThemedText style={styles.title}>{t("leads.title")}</ThemedText>
             <ThemedTextInput
                 searchContainerStyle={styles.inputContainer}
-                placeholder="Search Leads"
+                placeholder={t("leads.searchPlaceholder")}
                 isSearchBox
             />
             <ThemedView style={styles.filterList}>
@@ -24,7 +25,7 @@ export default function HomeScreen() {
                     data={stages}
                     renderItem={({ item }) => (
                         <ThemeButton
-                            title={item.name}
+                            title={t(`leads.filter.${item.nameKey}`)}
                             style={styles.filterButton}
                             textStyles={styles.filterButtonText}
                             isSelected={selectedFilter === item.id}

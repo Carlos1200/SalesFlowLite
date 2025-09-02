@@ -2,6 +2,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { formatDistanceToNow } from "date-fns";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
 export type LeadCardProps = {
@@ -19,6 +20,7 @@ export const LeadCard = ({
 }: LeadCardProps) => {
     const backgroundColor = useThemeColor({}, "backgroundSecondary");
     const secondaryTextColor = useThemeColor({}, "textSecondary");
+    const { t } = useTranslation();
     return (
         <ThemedView style={[styles.card, { backgroundColor }]}>
             <View>
@@ -32,7 +34,7 @@ export const LeadCard = ({
             </View>
             <View style={styles.dateContainer}>
                 <ThemedText style={{ color: secondaryTextColor }}>
-                    Created
+                    {t("leads.created")}
                 </ThemedText>
                 <ThemedText style={{ color: secondaryTextColor }}>
                     {formatDistanceToNow(new Date(createdAt), {
