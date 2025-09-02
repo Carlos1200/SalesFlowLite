@@ -3,6 +3,7 @@ import { FlatList, StyleSheet } from "react-native";
 import { ThemeButton } from "@/components/ThemeButton";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { ThemeFAB } from "@/components/ThemeFAB";
 import { ThemedTextInput } from "@/components/ThemeTextInput";
 import { LeadCard } from "@/components/ui/Leads/LeadCard";
 import { stages } from "@/constants/LeadsList";
@@ -42,6 +43,7 @@ export default function HomeScreen() {
                 contact="john.doe@example.com"
                 createdAt="2023-03-15T12:00:00Z"
             />
+            <ThemeFAB icon="add" onPress={() => {}} />
         </ThemedView>
     );
 }
